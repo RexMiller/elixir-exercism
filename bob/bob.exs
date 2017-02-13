@@ -1,6 +1,6 @@
 defmodule Bob do
 
-  @type sentance_type :: :silence | :question | :shout | :normal_talk
+  @type sentence_type :: :silence | :question | :shout | :normal_talk
 
   @responses %{
     silence: "Fine. Be that way!",
@@ -19,9 +19,9 @@ defmodule Bob do
     end
   end
 
-  @spec respond_to(sentance_type) :: String.t()
-  defp respond_to(sentance_type),
-    do: @responses[sentance_type]
+  @spec respond_to(sentence_type) :: String.t()
+  defp respond_to(sentence_type),
+    do: @responses[sentence_type]
 
   defp is_silence(input),
     do: Regex.match?(~r/^\s*$/, input)
