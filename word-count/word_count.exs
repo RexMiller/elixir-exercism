@@ -7,8 +7,10 @@ defmodule Words do
   @spec count(String.t) :: map
   def count(sentence) do
     sentence
-    |> String.replace(~r/\W/, " ")
-    |> String.split(~r/\s+/, trim: true)
+    |> String.replace("_", " ")
+    |> String.downcase()
+    |> (fn(s) -> Regex.scan(~r/(*UTF8)[\w-]+/, s) end).()
+    |> Enum.flat_map(fn(s) -> s end)
     |> count_words()
   end
 
