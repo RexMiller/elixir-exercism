@@ -10,7 +10,7 @@ defmodule School do
   """
   @spec add(map, String.t, integer) :: map
   def add(db, name, grade) do
-    {_, db} = Map.get_and_update(%{}, 2, fn(current) -> {current, ["bob"]} end)
+    Map.update(db, grade, [name], &([name | &1]))
   end
 
   @doc """
@@ -18,7 +18,10 @@ defmodule School do
   """
   @spec grade(map, integer) :: [String.t]
   def grade(db, grade) do
-
+    (fn
+      (nil) -> []
+      (grade_list) -> Enum.sort(grade_list)
+     end).(db[grade])
   end
 
   @doc """
@@ -26,6 +29,8 @@ defmodule School do
   """
   @spec sort(map) :: [{integer, [String.t]}]
   def sort(db) do
-
+    db 
+    |> Enum.sort()
+    |> Enum.map(fn({grade, list}) -> {grade, Enum.sort(list)} end)
   end
 end
